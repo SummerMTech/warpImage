@@ -7,6 +7,9 @@ lista=[]
 boxes=[]
 datos=np.load('D:/mine/raspberry/python/officialTrialVideos/sar.npy')
 listaFile=datos[1]
+listaFile1=datos[0]
+listaFile2=datos[2]
+
 print(datos)
 def get_BigRectangle(event,x,y,flags,param):
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -46,6 +49,7 @@ while True:
 		pts=vrx.reshape((-1,1,2))
 		cv2.polylines(frame,[pts],True,(0,255,255))
 		cv2.imshow('First_Frame',frame)
+		#np.save('D:/mine/raspberry/python/officialTrialVideos/sar.npy',lista)
 		#print('lista: '+str(lista))
 		#print('ListaAux Removed...'+ str(listaAux))
 		overlay=frame.copy()
@@ -69,9 +73,19 @@ cutting=Transform(listaFile)
 cap=cv2.VideoCapture('D:/mine/raspberry/python/officialTrialVideos/sar.mp4')
 while(1):
 	ret, frame=cap.read()
+	##draw
 	frame=cv2.resize(frame,(320,240))
 	start=timeit.default_timer()	
-	cutIma=cutting.cutRegion(frame)
+	cutIma,listaNew=cutting.cutRegion(frame)
+	
+	vrx=np.array([[listaNew]],np.int32)
+	pts=vrx.reshape((-1,1,2))
+	cv2.polylines(frame,[pts],True,(255,0,0),2)
+
+	vrx=np.array([[listaFile]],np.int32)
+	pts=vrx.reshape((-1,1,2))
+	cv2.polylines(frame,[pts],True,(0,0,255),2)
+	
 	Boxes=backSub.findBackSubs(cutIma)
 	Real_Boxes=cutting.real_Points(Boxes)
 	draw(Boxes,cutIma)

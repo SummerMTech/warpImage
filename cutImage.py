@@ -20,10 +20,11 @@ class Transform():
         self.anguloInicial=math.atan((y2-y1)/(x2-x1))
         self.anguloInicialGrados=self.anguloInicial*180/(math.pi)
         ##distancia puntos dos y tres
+        #print('real x3 and y3:.. '+str(x3)+'--'+str(y3))
         distancia=math.sqrt((x2-x3)**2+(y2-y3)**2)
         x3=distancia*math.cos(math.pi-math.pi/2-self.anguloInicial)+x2
         y3=y2-distancia*math.sin(math.pi-math.pi/2-self.anguloInicial)
-
+        #print('90 degrees x3 and y3:.. '+str(x3)+'--'+str(y3))
 
         d1=x3-x2
         d2=y2-y3
@@ -39,7 +40,7 @@ class Transform():
             Y1=d2
             X1=(Y1-y1)*(x2-x1)//(y2-y1)+x1
             X4=X1+d1
-        if Y1!=0:
+        if Y1>0:
             if d2>Y1:
                 Y4=0
                 Y1=d2
@@ -60,8 +61,9 @@ class Transform():
 
         self.src_point1 = (X1,Y1)
         self.src_point2 = self.src[1]
-        self.src_point3 = self.src[2]
+        self.src_point3 = (x3,y3)
         self.src_point4 = (X4,Y4)
+        print('Final Points:.. '+str(self.src_point1)+'--'+str(self.src_point2)+str(self.src_point3)+str(self.src_point4))
         self.angulo=0
         self.angle=0
         self.NewLista=[]
@@ -105,11 +107,12 @@ class Transform():
         M = cv2.getPerspectiveTransform(src, dst)
         # Warp the image using OpenCV warpPerspective()
         warped = cv2.warpPerspective(frame, M, img_size)
+        pointsNew=[(self.src_point1),(self.src_point2),(self.src_point3),(self.src_point4)]
         # Just comment the vizualization
         #cv2.imshow("original",image)
         #cv2.imshow("perspective",warped)
         #cv2.waitKey(0)
-        return warped
+        return warped,pointsNew
 
     def real_Points(self,points):
         
