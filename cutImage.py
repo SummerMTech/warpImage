@@ -107,12 +107,9 @@ class Transform():
         M = cv2.getPerspectiveTransform(src, dst)
         # Warp the image using OpenCV warpPerspective()
         warped = cv2.warpPerspective(frame, M, img_size)
-        pointsNew=[(self.src_point1),(self.src_point2),(self.src_point3),(self.src_point4)]
-        # Just comment the vizualization
-        #cv2.imshow("original",image)
-        #cv2.imshow("perspective",warped)
-        #cv2.waitKey(0)
-        return warped,pointsNew
+        #pointsNew=[(self.src_point1),(self.src_point2),(self.src_point3),(self.src_point4)]
+     
+        return warped
 
     def real_Points(self,points):
         

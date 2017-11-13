@@ -51,20 +51,16 @@ while True:
 		cv2.imshow('First_Frame',frame)
 		#np.save('D:/mine/raspberry/python/officialTrialVideos/sar.npy',lista)
 		#print('lista: '+str(lista))
-		#print('ListaAux Removed...'+ str(listaAux))
 		overlay=frame.copy()
 	if keyPress == 27:
 		#print('_____Data not accept..')
 		#print('*Select two points next press -a- to obtain Angle')
-		#print('lista no append: '+str(lista))
+		#print('lista no appended: '+str(lista))
 		lista=[]
-		#print('ListaAux Removed...'+ str(listaAux))
 		frame=overlay.copy()
 		cv2.imshow('First_Frame',frame)
 	
 	if keyPress&0xFF==ord('q'):
-		# file2.write("\n".listFinal)         
-		#print('saved!!')
 		break
 cv2.destroyAllWindows()
 backSub=Detector()
@@ -76,11 +72,11 @@ while(1):
 	##draw
 	frame=cv2.resize(frame,(320,240))
 	start=timeit.default_timer()	
-	cutIma,listaNew=cutting.cutRegion(frame)
-	
-	vrx=np.array([[listaNew]],np.int32)
-	pts=vrx.reshape((-1,1,2))
-	cv2.polylines(frame,[pts],True,(255,0,0),2)
+	#cutIma,listaNew=cutting.cutRegion(frame)
+	cutIma=cutting.cutRegion(frame)
+	#vrx=np.array([[listaNew]],np.int32)
+	#pts=vrx.reshape((-1,1,2))
+	#cv2.polylines(frame,[pts],True,(255,0,0),2)
 
 	vrx=np.array([[listaFile]],np.int32)
 	pts=vrx.reshape((-1,1,2))
