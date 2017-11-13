@@ -73,12 +73,12 @@ class Transform():
         d=math.sqrt((self.src_point4[0]-self.src_point1[0])**2+(self.src_point4[1]-self.src_point1[1])**2)
         #print('Division'+str(self.src_point2[1])+'/'+str(a))       
         #print('punto uno:..'+str(self.src_point1)+'--'+'Punto dos:..'+str(self.src_point2))
-        self.angulo=math.asin((self.src_point2[1]-self.src_point1[1])/a)
-        
+        #self.angulo=math.asin((self.src_point2[1]-self.src_point1[1])/a)
+        self.angulo=self.anguloInicial
         #print('Angulo en Radianes'+str(self.angulo))
         self.angle=self.angulo*180/(math.pi)
-        print('AnguloInicial Grados'+str(self.anguloInicialGrados))
-        print('Angulo Grados'+str(self.angle))
+        #print('AnguloInicial Grados'+str(self.anguloInicialGrados))
+        #print('Angulo Grados'+str(self.angle))
         
         #print(a)
         #print(b)
@@ -97,7 +97,7 @@ class Transform():
         else:
         	img_size = (self.lado1, self.lado2)
         self.size=img_size
-        print('size_New_Image..'+ str(img_size))
+        #print('size_New_Image..'+ str(img_size))
         dst = np.float32([[0,0], [img_size[0],0], [img_size[0],img_size[1]], [0,img_size[1]]])
         # For source points I'm grabbing the outer four detected corners
         src = np.float32([self.src_point4, self.src_point3, self.src_point2, self.src_point1])
@@ -113,79 +113,79 @@ class Transform():
 
     def real_Points(self,points):
         
-        print('angulo:..'+str(self.angle))
-        print('Punto OrigenX1:...'+str(self.src_point1))
-        print('Punto OrigenX1:...'+str(self.src_point4))
-        print('Punto OrigenX1:...'+str(self.src_point2))
-        print('tamaño en Y'+str(self.size[1]))
+        #print('angulo:..'+str(self.angle))
+        #print('Punto OrigenX1:...'+str(self.src_point1))
+        #print('Punto OrigenX1:...'+str(self.src_point4))
+        #print('Punto OrigenX1:...'+str(self.src_point2))
+        #print('tamaño en Y'+str(self.size[1]))
         x_add=(0)*math.cos(-self.angulo)+(self.size[1])*math.sin(-self.angulo)
         X_add=abs(x_add)
-        print('x_add:...'+str(x_add))
-        print('X_add:...'+str(X_add))
+        #print('x_add:...'+str(x_add))
+        #print('X_add:...'+str(X_add))
 
         if self.src_point1[0]==0 and self.src_point4[1]==0:
-            print('caso1 X=0 and y=0')
-            print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))     
+            #print('caso1 X=0 and y=0')
+            #print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))     
             for i in range(len(points)):
                 for j in range(2):
-                    print('caso1 X=0 and y=0')
-                    print('X_add:...'+str(X_add))
-                    print('points en i Iniciales:--'+str(points[i]))
+                    #print('caso1 X=0 and y=0')
+                    #print('X_add:...'+str(X_add))
+                    #print('points en i Iniciales:--'+str(points[i]))
                     x=points[i][j][0]
                     y=points[i][j][1]
-                    print('X and Y :...'+str(x)+ '-'+str(y))
+                    #print('X and Y :...'+str(x)+ '-'+str(y))
                     points=list(points)
                     box=list(points[i])
                     change=list(box[j])
                     change[0]=int(X_add+((x)*math.cos(-self.angulo)+(y)*math.sin(-self.angulo)))
-                    print('change X:..'+ str(change[0]))
+                    #print('change X:..'+ str(change[0]))
                     change[1]=int(-math.sin(-self.angulo)*(x)+(y)*math.cos(-self.angulo))
-                    print('change Y:..'+ str(change[1]))
+                    #print('change Y:..'+ str(change[1]))
                     box[j]=tuple(change)
                     points[i]=tuple(box)
                     points=tuple(points)
-                    print('points en i:--'+str(points[i]))
+                    #print('points en i:--'+str(points[i]))
                     #points=tuple(newpoints)
         if self.src_point4[1]!=0 and self.src_point1[0]==0 :
             
-            print('caso2 X=0 and y!=0')
-            print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))
+            #print('caso2 X=0 and y!=0')
+            #print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))
             for i in range(len(points)):
                 for j in range(2):
-                    print('caso2 X=0 and y!=0')
-                    print('points en i Iniciales:--'+str(points[i]))
+                    #print('caso2 X=0 and y!=0')
+                    #print('points en i Iniciales:--'+str(points[i]))
                     x=points[i][j][0]
                     y=points[i][j][1]
-                    print('X and Y :...'+str(x)+ '-'+str(y))
+                    #print('X and Y :...'+str(x)+ '-'+str(y))
                     points=list(points)
                     box=list(points[i])
                     change=list(box[j])
                     change[0]=int(X_add+((x)*math.cos(-self.angulo)+(y)*math.sin(-self.angulo)))
-                    print('change X:..'+ str(change[0]))
+                    #print('change X:..'+ str(change[0]))
                     change[1]=int(self.src_point4[1]+(-math.sin(-self.angulo)*(x)+(y)*math.cos(-self.angulo)))
-                    print('change Y:..'+ str(change[1]))
+                    #print('change Y:..'+ str(change[1]))
                     box[j]=tuple(change)
                     points[i]=tuple(box)
                     points=tuple(points)
-                    print('points en i:--'+str(points[i]))
+                    #print('points en i:--'+str(points[i]))
         if self.src_point1[0]!=0  and self.src_point4[1]==0:
-            print('caso3 X!=0 and y=0')
-            print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))
+            #print('caso3 X!=0 and y=0')
+            #print('X:--'+str(self.src_point1[0])+'--Y:--'+str(self.src_point4[1]))
             for i in range(len(points)):
                 for j in range(2):
-                    print('points en i Iniciales:--'+str(points[i]))
+                    #print('points en i Iniciales:--'+str(points[i]))
                     x=points[i][j][0]
                     y=points[i][j][1]
-                    print('X and Y :...'+str(x)+ '-'+str(y))
+                    #print('X and Y :...'+str(x)+ '-'+str(y))
                     points=list(points)
                     box=list(points[i])
                     change=list(box[j])
                     change[0]=int(self.src_point4[0]+X_add+((x)*math.cos(-self.angulo)+(y)*math.sin(-self.angulo)))
-                    print('change X:..'+ str(change[0]))
+                    #print('change X:..'+ str(change[0]))
                     change[1]=int(-math.sin(-self.angulo)*(x)+(y)*math.cos(-self.angulo))
-                    print('change Y:..'+ str(change[1]))
+                    #print('change Y:..'+ str(change[1]))
                     box[j]=tuple(change)
                     points[i]=tuple(box)
                     points=tuple(points)
-                    print('points en i:--'+str(points[i]))
+                    #print('points en i:--'+str(points[i]))
         return points

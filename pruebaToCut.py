@@ -60,7 +60,7 @@ while True:
 	
 	if keyPress&0xFF==ord('q'):
 		# file2.write("\n".listFinal)         
-		print('saved!!')
+		#print('saved!!')
 		break
 cv2.destroyAllWindows()
 backSub=Detector()
