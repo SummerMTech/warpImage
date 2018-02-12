@@ -6,7 +6,7 @@ from backProve import Detector
 lista=[]
 
 boxes=[]
-datos=np.load('D:/mine/raspberry/python/officialTrialVideos/sar.npy')
+datos=np.load('/home/pi/trafficFlow/prototipo/installationFiles/sar.npy')
 listaFile=datos[1]
 listaFile1=datos[0]
 listaFile2=datos[2]
@@ -30,7 +30,7 @@ def draw(matches,frame_resized):
     
 try:
 		#cap=cv2.VideoCapture(directorioDeVideos+nameSourceVideo)
-		cap=cv2.VideoCapture('D:/mine/raspberry/python/officialTrialVideos/sar.mp4')
+		cap=cv2.VideoCapture(0)
 		for i in range (50):
 			ret, frame=cap.read()
 		frame=cv2.resize(frame,(320,240))
@@ -67,7 +67,7 @@ cv2.destroyAllWindows()
 backSub=Detector()
 cutting=Transform(lista)
 #cutting=Transform(listaFile)
-cap=cv2.VideoCapture('D:/mine/raspberry/python/officialTrialVideos/sar.mp4')
+cap=cv2.VideoCapture(0)
 while(1):
 	start=timeit.default_timer()	
 	ret, frame=cap.read()
@@ -95,7 +95,7 @@ while(1):
 	#print(Boxes)
 	#print('puntosReales')
 	#print(Real_Boxes)
-	
+	#f=np.vstack((frame,cutIma))
 	cv2.imshow('original',frame)
 	cv2.imshow('cutting',cutIma)
 	#print('data:...'+str(boxes))

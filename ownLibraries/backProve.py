@@ -25,6 +25,7 @@ class Detector():
         cy = y + y1
         return (cx, cy)
     def findBackSubs(self,frame):
+        movimiento=0
         matches=[]
         fgmask = self.fgbg.apply(frame)
         fgmask = cv2.morphologyEx(fgmask, cv2.MORPH_OPEN, self.kernel)
@@ -34,7 +35,12 @@ class Detector():
             (x, y, w, h) = cv2.boundingRect(contour)
             centroid = Detector.get_centroid(x, y, w, h)####looking for the best way
             matches.append(((x, y, w, h), centroid))
+            if cv2.contourArea(contour)>=10:
+                movimiento=1
+            else:
+                movimiento=0
+            
         #print(len(matches))    
-        return matches
+        return matches,movimiento
 
 
